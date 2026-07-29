@@ -7,5 +7,14 @@
     "image": "uploads/895d107eee80409f900b277eb4397259.jpeg",
     "link": "",
     "order": 0
+  },
+  {
+    "id": "247a0dd6",
+    "title": "SQL Developer",
+    "issuer": "Infosys Springboard",
+    "meta": "Course Completion • 2025",
+    "image": "uploads/ec8103b410c447b1aa9bf66627248743.jpeg",
+    "link": "",
+    "order": 1
   }
 ]
