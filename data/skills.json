@@ -1,0 +1,106 @@
+[
+  {
+    "id": "skill-languages",
+    "title": "Programming Languages",
+    "subtitle": "Core languages I work in",
+    "tags": [
+      "Python",
+      "C"
+    ],
+    "subgroups": [],
+    "wide": false,
+    "order": 0
+  },
+  {
+    "id": "skill-web",
+    "title": "Web Development",
+    "subtitle": "Frontend & backend",
+    "tags": [
+      "HTML",
+      "CSS",
+      "Bootstrap",
+      "Flask",
+      "Django",
+      "FastAPI",
+      "REST APIs"
+    ],
+    "subgroups": [],
+    "wide": false,
+    "order": 1
+  },
+  {
+    "id": "skill-databases",
+    "title": "Databases",
+    "subtitle": "Storage & queries",
+    "tags": [
+      "MySQL",
+      "SQLite",
+      "MongoDB"
+    ],
+    "subgroups": [],
+    "wide": false,
+    "order": 2
+  },
+  {
+    "id": "skill-tools",
+    "title": "Tools & Platforms",
+    "subtitle": "Daily workflow",
+    "tags": [
+      "Git",
+      "GitHub",
+      "Docker",
+      "VS Code",
+      "Render"
+    ],
+    "subgroups": [],
+    "wide": false,
+    "order": 3
+  },
+  {
+    "id": "skill-cloud",
+    "title": "Cloud Platforms",
+    "subtitle": "Deploying, managing & scaling AI apps",
+    "tags": [
+      "AWS",
+      "Microsoft Azure",
+      "Google Cloud Platform"
+    ],
+    "subgroups": [],
+    "wide": false,
+    "order": 4
+  },
+  {
+    "id": "skill-ai",
+    "title": "AI / Machine Learning",
+    "subtitle": "Building intelligent applications using AI, Machine Learning, Deep Learning & Generative AI.",
+    "tags": [],
+    "subgroups": [
+      {
+        "label": "Frameworks",
+        "tags": [
+          "TensorFlow",
+          "PyTorch",
+          "Scikit-learn"
+        ]
+      },
+      {
+        "label": "Libraries",
+        "tags": [
+          "Pandas",
+          "NumPy",
+          "OpenCV"
+        ]
+      },
+      {
+        "label": "Domains",
+        "tags": [
+          "Computer Vision",
+          "Natural Language Processing (NLP)",
+          "Generative AI"
+        ]
+      }
+    ],
+    "wide": true,
+    "order": 5
+  }
+]

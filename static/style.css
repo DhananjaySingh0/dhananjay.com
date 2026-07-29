@@ -1,0 +1,1695 @@
+:root{
+  --purple:#6C5CE7;
+  --blue:#4C7CF3;
+  --teal:#12B886;
+  --indigo:#5b4fd6;
+  --gold:#E3A23C;
+  --gold-dark:#B9791F;
+  --ink:#171B2B;
+  --muted:#5b6072;
+  --bg:#ffffff;
+  --bg-soft:#F5F4FC;
+  --line:#ECEBF6;
+  --radius:16px;
+  --grad: linear-gradient(90deg,var(--purple),var(--blue));
+  --border:var(--line);
+  --surface:var(--bg);
+  --text:var(--ink);
+  --accent:var(--purple);
+  --ease:cubic-bezier(.4,0,.2,1);
+  font-family:'Inter',system-ui,sans-serif;
+}
+
+html[data-theme="dark"]{
+  --purple:#8b5cf6;
+  --blue:#3b82f6;
+  --teal:#2fd9a0;
+  --indigo:#8478f0;
+  --gold:#F0B559;
+  --gold-dark:#D89A3A;
+  --ink:#F3F4FA;
+  --muted:#9DA3C0;
+  --bg:#0A0F24;
+  --bg-soft:#111633;
+  --line:#212852;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{color:var(--ink);background:var(--bg);line-height:1.5;transition:background .25s ease, color .25s ease;}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-0.01em;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+img,svg{display:block;max-width:100%;}
+:focus-visible{outline:3px solid var(--purple);outline-offset:2px;}
+
+.navbar,.project-card,.cap-card,.capability-strip,.stat-card,.cert-card,.skill-pill,.contact-form input,.contact-form textarea,.avatar-glow{transition:background .25s ease, border-color .25s ease, color .25s ease;}
+
+/* [hidden] must beat .btn's display:inline-flex, or admin-only buttons
+   (add-project-btn etc.) stay visible to logged-out visitors even though
+   the server/JS correctly set the hidden attribute - author CSS always
+   overrides the UA stylesheet's [hidden]{display:none}, regardless of
+   selector specificity. */
+[hidden]{display:none !important;}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-weight:600;font-size:.95rem;cursor:pointer;border:none;transition:transform .15s ease, box-shadow .15s ease;}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 6px 16px -6px rgba(108,92,231,.35);}
+.btn-primary:hover{box-shadow:0 14px 28px -8px rgba(108,92,231,.55);}
+.btn-outline{background:rgba(255,255,255,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--ink);border:1px solid rgba(99,102,241,.15);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.arrow{font-size:1.05rem;display:inline-block;transition:transform .25s var(--ease);}
+.btn:hover .arrow{transform:translateX(3px);}
+.btn-outline:hover .arrow{transform:translateY(3px);}
+
+/* ===== TICKER (PCL-style scrolling strip) ===== */
+.ticker-wrap{background:#0B1830;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(227,162,60,.25);}
+.ticker-track{display:inline-flex;animation:ticker 26s linear infinite;padding:9px 0;}
+.ticker-track span{color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.02em;padding:0 28px;position:relative;}
+.ticker-track span::after{content:'•';position:absolute;right:-2px;color:rgba(227,162,60,.4);}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion: reduce){.ticker-track{animation:none;}}
+
+/* ===== NAVBAR ===== */
+.navbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:background .25s ease, box-shadow .25s ease, border-color .25s ease;}
+.navbar.is-scrolled{background:var(--bg);border-bottom-color:var(--line);box-shadow:0 8px 24px -16px rgba(23,27,43,.25);}
+.nav-inner{max-width:1500px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:32px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-family:'Sora',sans-serif;}
+.logo-icon{background:var(--grad);color:#fff;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem;}
+.logo-text{font-size:1.05rem;color:var(--purple);}
+.logo-text b{color:var(--ink);}
+.nav-links{display:flex;gap:6px;flex:1;align-items:center;justify-content:center;}
+.nav-links a{font-size:.95rem;font-weight:700;color:var(--ink);padding:10px 18px;border-radius:999px;transition:background .18s ease, color .18s ease;}
+.nav-links a:hover, .nav-links a.active{color:var(--blue);background:color-mix(in srgb, var(--blue) 12%, transparent);}
+.nav-cta{white-space:nowrap;padding:11px 20px;transition:transform .3s var(--ease), box-shadow .3s var(--ease);}
+.nav-cta .arrow{transition:transform .35s var(--ease);}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px -6px rgba(108,92,231,.55), 0 0 20px 2px rgba(108,92,231,.4);}
+.nav-cta:hover .arrow{transform:rotate(45deg) scale(1.2);}
+.burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;}
+.burger span{width:22px;height:2px;background:var(--ink);}
+
+/* theme toggle */
+.theme-toggle {
+  position:relative;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), transform 0.3s var(--ease);
+}
+.theme-toggle:hover { border-color: var(--accent); transform: rotate(-20deg); }
+.theme-toggle__icon { position: absolute; transition: opacity 0.25s var(--ease), transform 0.25s var(--ease); }
+.theme-toggle__icon svg{width:19px;height:19px;display:block;}
+[data-theme='dark'] .theme-toggle__icon--light { opacity: 0; transform: scale(0.4) rotate(90deg); }
+[data-theme='dark'] .theme-toggle__icon--dark { opacity: 1; }
+[data-theme='light'] .theme-toggle__icon--dark { opacity: 0; transform: scale(0.4) rotate(-90deg); }
+[data-theme='light'] .theme-toggle__icon--light { opacity: 1; color: var(--accent); }
+
+/* social icons */
+.social-links{display:flex;gap:16px;margin-top:5px;flex-wrap:wrap;}
+.social-icon{width:56px;height:56px;border-radius:16px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);background:var(--bg);transition:color .15s ease, border-color .15s ease, transform .15s ease, background .15s ease;}
+.social-icon svg{width:24px;height:24px;}
+.social-icon:hover{color:var(--purple);border-color:var(--purple);background:var(--bg-soft);transform:translateY(-3px) scale(1.06);}
+.footer-socials{display:flex;justify-content:center;gap:14px;margin-bottom:16px;}
+.footer-socials .social-icon{width:44px;height:44px;border-radius:50%;}
+.footer-socials .social-icon svg{width:18px;height:18px;}
+.footer-socials .social-icon:hover{background:var(--purple);border-color:transparent;color:#fff;transform:translateY(-4px);box-shadow:0 10px 25px color-mix(in srgb, var(--purple) 25%, transparent);}
+
+/* ===== HERO ===== */
+.hero{max-width:1500px;margin:0 auto;padding:0px 20px 20px;position:relative;border-radius:20px;overflow:hidden;}
+html[data-theme="light"] .hero-inner{background-image:url('hero-ai-light.png');}
+/* readability veil so left-side text stays crisp over the background */
+.hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 26%, color-mix(in srgb, var(--bg) 45%, transparent) 46%, transparent 62%);}
+.hero-inner,.hero .capability-strip{position:relative;z-index:1;}
+.hero-inner{min-height:500px;}
+.hero .capability-strip{background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(6px);}
+@media (max-width:900px){
+  /* Text collapses to a single full-width column here, so the image is pushed
+     below the text (not behind it) to stop badges/buttons overlapping it. */
+  .hero-inner{background-size:480px auto;background-position:center bottom 24px;min-height:980px;padding-bottom:420px;}
+  /* Solid veil over the text zone (top), fading out lower down so the image is
+     clearly visible only in the reserved space beneath the text. */
+  .hero::after{background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 52%, color-mix(in srgb, var(--bg) 40%, transparent) 68%, transparent 82%);}
+}
+@media (max-width:560px){
+  .hero-inner{background-size:340px auto;min-height:820px;padding-bottom:340px;}
+  .hero::after{background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 58%, color-mix(in srgb, var(--bg) 40%, transparent) 74%, transparent 88%);}
+}
+@media (max-width:400px){
+  .hero-inner{background-size:260px auto;min-height:720px;padding-bottom:280px;}
+}
+.hero::before{content:'';position:absolute;inset:-40px 0 auto 0;height:450px;background-image:radial-gradient(color-mix(in srgb, var(--ink) 8%, transparent) 1px, transparent 1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 75%);pointer-events:none;z-index:0;}
+.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative;z-index:1;background-repeat:no-repeat;background-position:right bottom;background-size:900px auto;background-image:url('hero-ai-dark.png');}
+
+/* Subtle floating + glow on the AI illustration for a more premium feel */
+@keyframes heroImageFloat{
+  0%,100%{
+    background-position-y:100%;
+  }
+  50%{
+    background-position-y:calc(100% - 14px);
+  }
+}
+@media (min-width:901px){
+  .hero-inner{animation:heroImageFloat 6s ease-in-out infinite;}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-inner{animation:none;}
+}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted);margin-bottom:18px;}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);}
+.hero-greet{animation:heroGreetFadeUp .8s ease both, heroGreetFloat 4s ease-in-out infinite .8s;}
+.hero-greet .dot{animation:heroGreetPulse 2s infinite;}
+.hero-greet-wave{display:inline-block;transform-origin:70% 70%;animation:heroGreetWave 2.5s infinite;}
+@keyframes heroGreetFadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes heroGreetFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+@keyframes heroGreetWave{0%,100%{transform:rotate(0);}10%{transform:rotate(14deg);}20%{transform:rotate(-8deg);}30%{transform:rotate(14deg);}40%{transform:rotate(-4deg);}50%{transform:rotate(10deg);}60%{transform:rotate(0);}}
+@keyframes heroGreetPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--teal) 55%, transparent);}70%{box-shadow:0 0 0 10px color-mix(in srgb, var(--teal) 0%, transparent);}100%{box-shadow:0 0 0 0 color-mix(in srgb, var(--teal) 0%, transparent);}}
+@media (prefers-reduced-motion: reduce){.hero-greet, .hero-greet .dot, .hero-greet-wave{animation:none;}}
+.hero-text h1{font-size:3.1rem;font-weight:800;line-height:1.1;margin-bottom:18px;}
+.hero-text h1.hero-title{font-size:4.2rem;line-height:1.05;letter-spacing:-2px;margin-bottom:16px;}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ===== Shine sweep over the "AI/ML & Python" span ===== */
+.hero-title span{
+    position:relative;
+    overflow:hidden;
+}
+.hero-title span::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-150%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+    transform:skewX(-25deg);
+    animation:shine 3s infinite;
+}
+@keyframes shine{
+    from{
+        left:-150%;
+    }
+    to{
+        left:170%;
+    }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-title span::after{animation:none;display:none;}
+}
+
+/* ===== Staggered entrance animation for hero title words ===== */
+.hero-title span{
+    display:inline-block;
+    opacity:0;
+    background:linear-gradient(
+        90deg,
+        #6C63FF,
+        #8A7CFF,
+        #4F8CFF
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* AI/ML */
+.hero-title .ai{
+    transform:translateX(-120px);
+    animation:slideLeft .8s ease forwards;
+}
+
+/* & */
+.hero-title .and{
+    transform:scale(0);
+    animation:pop .4s ease forwards;
+    animation-delay:.8s;
+}
+
+/* Python */
+.hero-title .python{
+    transform:translateX(50px);
+    animation:fadeRight .8s ease forwards;
+    animation-delay:1.2s;
+}
+
+/* Developer */
+.hero-title .developer{
+    background:none;
+    -webkit-text-fill-color:var(--ink);
+    color:var(--ink);
+    transform:translateY(80px) scale(.8);
+    animation:developerUp .9s cubic-bezier(.22,1,.36,1) forwards;
+    animation-delay:1.9s;
+}
+
+/* AI/ML */
+@keyframes slideLeft{
+    from{
+        opacity:0;
+        transform:translateX(-120px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* & */
+@keyframes pop{
+    from{
+        opacity:0;
+        transform:scale(0);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* Python */
+@keyframes fadeRight{
+    from{
+        opacity:0;
+        transform:translateX(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* Developer */
+@keyframes developerUp{
+    from{
+        opacity:0;
+        transform:translateY(80px) scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-title span{animation:none !important;opacity:1;transform:none !important;}
+}
+
+/* Hero badges row (matches reference) */
+.hero-badges{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:20px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:.98rem;font-weight:600;color:var(--ink);}
+.hero-badge svg{color:var(--blue);}
+.hero-badge:nth-child(1) svg{color:var(--purple);}
+.hero-badge:nth-child(5) svg{color:var(--teal);}
+.hero-badge-sep{width:1px;height:18px;background:var(--line);}
+.hero-greet-name-short{display:none;}
+.tagline{font-size:1.25rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.code-tag{color:var(--blue);font-family:monospace;}
+.hero-desc{color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:520px;margin-bottom:24px;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+.resume-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+#resume-panel{scroll-margin-top:90px;}
+
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center;gap:20px;min-height:400px;padding:32px 24px;}
+
+/* ===== Hero full banner image ===== */
+.hero-banner-wrap{position:relative;z-index:1;}
+.hero-banner{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 30px 70px -34px rgba(0,0,0,.65);}
+@media (max-width:760px){.hero-banner{border-radius:10px;}}
+
+/* ===== Hero illustration (right side) ===== */
+.hero-visual-img-wrap{position:relative;width:100%;max-width:720px;margin-left:auto;z-index:1;animation:float 7s ease-in-out infinite;}
+.hero-visual-img-wrap::before{content:'';position:absolute;left:6%;top:2%;width:64%;height:60%;z-index:-1;border-radius:50%;background:radial-gradient(circle at 45% 40%, color-mix(in srgb, var(--blue) 30%, transparent), transparent 65%);filter:blur(50px);}
+.hero-visual-img{display:block;width:100%;height:auto;}
+/* theme-aware hero image: dark image in dark mode, light image in light mode */
+.hero-img-light{display:none;}
+html[data-theme="light"] .hero-img-dark{display:none;}
+html[data-theme="light"] .hero-img-light{display:block;}
+
+@media (prefers-reduced-motion: reduce){.hero-visual-img-wrap{animation:none;}}
+@media (max-width:900px){.hero-visual-img-wrap{max-width:520px;margin:0 auto;}}
+
+.floating-stat-card{position:absolute;top:8px;right:0;z-index:3;display:flex;flex-direction:column;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:0 16px 32px -20px rgba(23,27,43,.35);animation:float 6s ease-in-out infinite;animation-delay:.4s;}
+.floating-stat-label{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+.floating-stat-spark{width:80px;height:26px;}
+.floating-stat-value{font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:800;color:var(--blue);}
+
+.floating-code-card{position:absolute;bottom:4px;right:-4px;z-index:3;background:#0B1830;border:1px solid #1c2b52;border-radius:14px;padding:14px 16px;box-shadow:0 20px 40px -22px rgba(10,20,50,.6);animation:float 7s ease-in-out infinite;animation-delay:1s;max-width:230px;}
+.floating-code-dots{display:flex;gap:5px;margin-bottom:10px;}
+.floating-code-dots i{width:8px;height:8px;border-radius:50%;background:#3a4a7a;display:block;}
+.floating-code-card pre{margin:0;overflow:hidden;}
+.floating-code-card code{font-family:'JetBrains Mono',Consolas,monospace;font-size:.68rem;line-height:1.65;color:#9fb3e8;white-space:pre;}
+.floating-code-card .tok-kw{color:#F0B559;}
+
+@media (max-width:1024px){
+  .floating-stat-card,.floating-code-card{display:none;}
+}
+
+/* left icon-card column */
+.visual-col-icons{display:flex;flex-direction:column;gap:16px;z-index:2;}
+.visual-icon-card{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px;padding:16px 10px;border-radius:16px;background:var(--bg);border:1px solid var(--line);box-shadow:0 12px 24px -16px rgba(23,27,43,.3);font-size:.72rem;font-weight:700;color:var(--ink);text-align:center;animation:float 5s ease-in-out infinite;}
+.visual-col-icons .visual-icon-card:nth-child(2){animation-delay:.6s;}
+.visual-col-icons .visual-icon-card:nth-child(3){animation-delay:1.2s;}
+.visual-col-icons--right .visual-icon-card:nth-child(1){animation-delay:.3s;}
+.visual-col-icons--right .visual-icon-card:nth-child(2){animation-delay:.9s;}
+.visual-col-icons--right .visual-icon-card:nth-child(3){animation-delay:1.5s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@media (prefers-reduced-motion: reduce){.visual-icon-card{animation:none;}}
+
+/* AI network illustration (replaces photo upload) */
+.ai-network-visual{position:relative;width:230px;height:290px;flex:none;display:flex;align-items:center;justify-content:center;z-index:1;}
+.ai-network-glow{position:absolute;inset:20px 10px;border-radius:50%;background:radial-gradient(circle at 40% 25%, color-mix(in srgb, var(--purple) 30%, transparent), transparent 70%);filter:blur(10px);z-index:-1;}
+.ai-network-svg{width:100%;height:100%;overflow:visible;}
+.head-outline{filter:drop-shadow(0 0 6px color-mix(in srgb, var(--purple) 45%, transparent));}
+.ai-node{animation:nodePulse 2.6s ease-in-out infinite;}
+.ai-network-svg circle:nth-child(2){animation-delay:.2s;}
+.ai-network-svg circle:nth-child(3){animation-delay:.5s;}
+.ai-network-svg circle:nth-child(4){animation-delay:.8s;}
+.ai-network-svg circle:nth-child(5){animation-delay:1.1s;}
+.ai-network-svg circle:nth-child(6){animation-delay:1.4s;}
+.ai-network-svg circle:nth-child(7){animation-delay:1.7s;}
+.ai-network-svg circle:nth-child(8){animation-delay:2s;}
+@keyframes nodePulse{0%,100%{opacity:.55;}50%{opacity:1;}}
+@media (prefers-reduced-motion: reduce){.ai-node{animation:none;}}
+
+/* right name card */
+.visual-name-card{display:flex;flex-direction:column;gap:16px;max-width:260px;z-index:2;}
+.visual-name{font-size:2.1rem;font-weight:800;}
+.visual-name-underline{width:48px;height:3px;border-radius:2px;background:var(--grad);margin-top:-8px;}
+.visual-info-row{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;color:var(--ink);font-weight:600;line-height:1.35;}
+.visual-info-icon{width:34px;height:34px;flex:none;border-radius:10px;background:var(--bg-soft);color:var(--purple);display:flex;align-items:center;justify-content:center;}
+
+.availability-badge{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;color:var(--teal);background:color-mix(in srgb, var(--teal) 12%, transparent);border:1px solid color-mix(in srgb, var(--teal) 30%, transparent);border-radius:999px;padding:9px 16px;width:fit-content;box-shadow:0 4px 14px -6px color-mix(in srgb, var(--teal) 45%, transparent), inset 0 1px 0 color-mix(in srgb, #fff 25%, transparent);backdrop-filter:blur(6px);}
+.availability-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb, var(--teal) 25%, transparent), 0 0 10px 2px color-mix(in srgb, var(--teal) 70%, transparent);animation:pulseDot 1.8s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+.tech-checklist{display:flex;flex-direction:column;gap:10px;}
+.tech-checklist li{list-style:none;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:600;color:var(--ink);}
+.tech-checklist li::before{content:'✔';color:var(--teal);font-size:.78rem;font-weight:800;}
+
+@media (max-width:1024px){
+  .hero-visual{flex-wrap:wrap;}
+}
+@media (max-width:640px){
+  .hero-visual{flex-direction:column;}
+  .visual-col-icons,.visual-col-icons--right{flex-direction:row;flex-wrap:wrap;justify-content:center;}
+}
+
+/* capability strip */
+.capability-strip{margin-top:0px;border:1px solid var(--line);border-radius:var(--radius);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;box-shadow:0 20px 40px -28px rgba(23,27,43,.25);}
+.cap-card{display:flex;align-items:center;gap:14px;padding:20px 24px;border-right:1px solid var(--line);transition:transform .2s var(--ease),background .2s var(--ease);}
+.cap-card:hover{transform:translateY(-4px);background:var(--bg-soft);}
+.cap-card:hover .cap-icon{transform:scale(1.1);}
+.cap-icon{transition:transform .2s var(--ease);}
+.cap-card:last-child{border-right:none;}
+.cap-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex:none;background:var(--bg-soft);}
+.icon-indigo{background:#ECEAFC;}
+.cap-card h4{font-size:.98rem;margin-bottom:2px;}
+.cap-card p{font-size:.83rem;color:var(--muted);}
+
+/* ===== SECTION HEAD ===== */
+.section-head{max-width:1280px;margin:0 auto;padding:0 32px ;display:flex;align-items:center;justify-content:space-between;margin-top:96px;margin-bottom:32px;}
+.section-head h2{font-size:1.6rem;display:flex;align-items:center;gap:12px;font-weight:700;}
+.section-head .bar{width:5px;height:26px;background:var(--grad);border-radius:3px;display:inline-block;}
+.section-head.center{justify-content:center;text-align:center;}
+.project-count-badge{color:var(--muted);font-size:1.1rem;font-weight:600;}
+
+.projects-head{
+  max-width:1500px;margin:20px auto 20px;padding:28px 32px;
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.projects-head-left{display:flex;align-items:center;gap:22px;}
+.projects-head-icon{
+  width:64px;height:64px;flex-shrink:0;border-radius:16px;
+  background:rgba(108,92,231,.12);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+}
+.projects-head-divider{width:2px;align-self:stretch;min-height:48px;background:var(--line);border-radius:2px;flex-shrink:0;}
+.projects-head-text h2{display:flex;align-items:center;gap:10px;font-size:1.7rem;font-weight:800;letter-spacing:-.01em;}
+.projects-head-text .project-count-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:28px;height:28px;padding:0 8px;border-radius:999px;
+  background:var(--grad);color:#fff;font-size:.95rem;font-weight:700;
+}
+.projects-head-text p{color:var(--muted);font-size:.95rem;margin-top:6px;max-width:800px;}
+.projects-head .add-project-btn{flex-shrink:0;}
+
+@media (max-width:640px){
+  /* Sabhi section headings normal (About/Education/Skills/Experience/Projects/Certifications) */
+  .projects-head{padding:22px 20px;}
+  .projects-head-left{gap:16px;}
+  .projects-head-icon{width:52px;height:52px;border-radius:14px;}
+  .projects-head-text h2{font-size:1.35rem;}
+
+  /* Sabhi section headings (About/Education/Skills/Projects/Certifications/Experience)
+     ab same style: heading ke SAATH ek row me inline, button compact, overlap na ho. */
+  .projects-head{flex-wrap:nowrap;gap:14px;align-items:flex-start;}
+  .projects-head-left{gap:12px;min-width:0;flex:1 1 auto;}
+  .projects-head-text{min-width:0;}
+  .projects-head-divider{display:none;}
+  .add-project-btn{
+    flex:0 0 auto;white-space:nowrap;align-self:flex-start;
+    padding:8px 14px;font-size:.8rem;min-width:0;
+  }
+  /* Button ka label chhota: sirf "+ Add" dikhe */
+  .add-project-btn .add-btn-word{display:none;}
+}
+
+@media (max-width:400px){
+  /* 390px: sabhi section headings (Projects/Certifications/Skills) same tarah compact,
+     ab sirf Certifications alag se chhota nahi hota - sab ek jaise dikhte hain. */
+  .projects-head-text h2{font-size:1.15rem;}
+  .projects-head-text .project-count-badge{min-width:22px;height:22px;font-size:.8rem;}
+  .projects-head{gap:10px;}
+  .projects-head-left{gap:10px;}
+  .add-project-btn{padding:7px 11px;font-size:.78rem;}
+}
+
+/* ===== Featured Projects heading: fade-up entrance + count badge ===== */
+.section-title{
+    font-size:2.8rem;
+    font-weight:800;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    opacity:0;
+    transform:translateY(30px);
+    animation:fadeUp .8s ease forwards;
+}
+.section-subtitle{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:1rem;
+}
+@keyframes fadeUp{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+@media (prefers-reduced-motion: reduce){
+  .section-title{animation:none;opacity:1;transform:none;}
+}
+.badge{
+    background:var(--accent);
+    color:#fff;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:700;
+    margin-left:2px;
+}
+.view-all{color:var(--blue);font-weight:600;font-size:.92rem;}
+
+/* ===== PROJECTS ===== */
+.projects{max-width:1500px;margin:0 auto;padding:0 32px 20px;}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(max(300px,calc((100% - 56px)/3)),1fr));gap:28px;}
+.project-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .2s, box-shadow .2s;}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 24px 40px -24px rgba(23,27,43,.25);}
+.proj-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;}
+.proj-purple{background:#EFEBFE;}
+.proj-blue{background:#EAF0FF;}
+.proj-green{background:#E4F9F0;}
+.proj-indigo{background:#ECEAFC;}
+.project-card h3{font-size:1.08rem;margin-bottom:8px;}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;margin-bottom:12px;}
+.tag-nlp{background:#EFEBFE;color:var(--purple);}
+.tag-cv{background:#EAF0FF;color:var(--blue);}
+.tag-ml{background:#E4F9F0;color:var(--teal);}
+.tag-web{background:#ECEAFC;color:var(--indigo);}
+.project-card p{color:var(--muted);font-size:.88rem;margin-bottom:16px;min-height:44px;}
+.stack{display:flex;flex-wrap:wrap;gap:8px;}
+.stack span{background:var(--bg-soft);color:var(--muted);font-size:.75rem;font-weight:600;padding:5px 10px;border-radius:8px;}
+
+/* ===== SELECTED WORK (dynamic project cards) =====
+   Scoped to desktop only: unscoped, this used to sit after the @media
+   (max-width:640px)/(max-width:400px) blocks above and win the cascade at
+   every screen size (same specificity, later in file), forcing a 200px-wide
+   button on mobile no matter what the mobile rules said. */
+@media (min-width:641px){
+  .add-project-btn{padding:9px 18px;font-size:.85rem;min-width:200px;justify-content:center;}
+}
+
+/* ===== "Delete existing" list inside the Add modals (mobile + desktop) ===== */
+.manage-existing{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;}
+.manage-existing-label{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:10px;}
+.manage-list{display:flex;flex-direction:column;gap:8px;max-height:230px;overflow-y:auto;}
+.manage-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg-soft);
+}
+.manage-row-title{
+  font-size:.9rem;color:var(--text);min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.manage-delete-btn{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border:none;border-radius:9px;cursor:pointer;
+  background:rgba(224,49,49,.12);color:#e03131;transition:background .15s ease;
+}
+.manage-delete-btn:hover{background:rgba(224,49,49,.22);}
+.manage-delete-btn:disabled{opacity:.5;cursor:default;}
+.manage-empty{font-size:.85rem;color:var(--muted);margin:2px 0 0;}
+.projects-loading,.projects-empty{color:var(--muted);font-size:.9rem;grid-column:1/-1;text-align:center;padding:40px 0;}
+.work-card{border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;background:var(--bg);transition:transform .2s var(--ease);animation:cardBlink 2.2s ease-in-out infinite;}
+.work-card:hover{transform:translateY(-2px);}
+@keyframes cardBlink{
+  0%,100%{box-shadow:0 1px 2px rgba(23,27,43,.04);border-color:var(--line);}
+  50%{box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent),0 28px 48px -20px rgba(23,27,43,.28);border-color:var(--accent);}
+}
+.work-thumb{position:relative;aspect-ratio:16/9;width:100%;background:var(--bg-soft);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:18px 18px 0 0;}
+.work-thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
+.work-thumb-glyph{color:rgba(255,255,255,.35);font-size:2rem;}
+.work-body{padding:28px;display:flex;flex-direction:column;gap:16px;flex:1;border-radius:0 0 18px 18px;}
+.work-body h3{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;}
+.work-desc{color:var(--muted);font-size:.9rem;line-height:1.6;margin-top:-8px;}
+.tech-tag{display:inline-flex;align-items:center;gap:6px;}
+.tech-tag-icon{font-size:1rem;line-height:1;}
+.work-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:16px;}
+.work-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-size:.85rem;font-weight:600;transition:transform .2s var(--ease), box-shadow .2s var(--ease), opacity .2s var(--ease);}
+.work-links a svg{width:16px;height:16px;flex-shrink:0;}
+.work-btn-code{background:transparent;color:var(--ink);border:1.5px solid var(--ink);}
+.work-btn-code:hover{background:var(--ink);color:var(--bg);transform:translateY(-2px);}
+.work-btn-demo{background:var(--accent);color:#fff;border:1.5px solid var(--accent);}
+.work-btn-demo:hover{transform:translateY(-2px);opacity:.92;}
+.view-all-btn{display:inline-flex;align-items:center;gap:10px;margin:36px auto 0;padding:16px 32px;border-radius:999px;border:1.5px solid var(--line);color:var(--ink);font-weight:700;font-size:1.05rem;background:transparent;transition:border-color .2s var(--ease),transform .2s var(--ease);width:fit-content;}
+.view-all-btn .arrow{transition:transform .2s var(--ease);}
+.view-all-btn:hover{border-color:var(--ink);transform:translateY(-2px);}
+.view-all-btn:hover .arrow{transform:translateX(4px);}
+
+/* Add-project modal */
+.project-form-overlay{position:fixed;inset:0;background:rgba(10,12,20,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:200;}
+.project-form-overlay[hidden]{display:none;}
+.project-form-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);max-width:560px;width:100%;max-height:88vh;overflow-y:auto;padding:26px;}
+.project-form-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.project-form-head h3{font-size:1.1rem;}
+.project-form-close{background:none;border:none;font-size:1.4rem;line-height:1;color:var(--muted);cursor:pointer;}
+
+.project-form{display:flex;flex-direction:column;gap:14px;}
+.project-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.project-form .field{display:flex;flex-direction:column;gap:6px;}
+.project-form label{font-size:.78rem;font-weight:600;color:var(--muted);}
+.project-form input,.project-form textarea{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:.9rem;background:var(--bg);color:var(--ink);width:100%;}
+.project-form input:focus,.project-form textarea:focus{border-color:var(--blue);}
+.project-form button[type="submit"]{align-self:flex-start;}
+@media (max-width:520px){.project-form .form-row{grid-template-columns:1fr;}}
+
+/* ===== ABOUT ===== */
+.about{max-width:1500px;margin:0 auto;padding:0 32px 15px;}
+.about-grid{max-width:1500px;margin:0 auto;padding:0 32px 0px;display:flex;flex-direction:column;gap:40px;}
+.about-intro-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}
+.intro-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px;display:flex;align-items:center;justify-content:center;transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
+.intro-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -28px rgba(23,27,43,.25);}
+.intro-card p{color:var(--muted);font-size:1rem;line-height:1.7;text-align:center;}
+.intro-card p b{color:var(--ink);font-weight:600;}
+.about-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.pillar-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:26px 16px;text-align:center;transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
+.pillar-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -28px rgba(23,27,43,.25);}
+.pillar-icon{width:56px;height:56px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--purple);box-shadow:0 6px 16px -8px rgba(108,92,231,.35);}
+.pillar-card h4{font-size:1rem;margin-bottom:10px;position:relative;display:inline-block;padding-bottom:8px;}
+.pillar-card h4::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:22px;height:3px;background:var(--grad);border-radius:2px;}
+.pillar-card p{font-size:.83rem;color:var(--muted);line-height:1.5;}
+.about .wave{display:inline-block;}
+
+/* ===== SKILLS ===== */
+.skills{max-width:1500px;margin:0 auto;padding:0 32px 15px;}
+.skills-grid{max-width:1500px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+.skill-pill{border:1px solid var(--line);padding:12px 22px;border-radius:999px;font-weight:600;font-size:.9rem;background:var(--bg-soft);transition:transform .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease);}
+.skill-pill:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent);}
+
+/* ===== SKILL CATEGORY CARDS ===== */
+.skills-cat-grid{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;flex-direction:column;gap:22px;}
+
+/* top row: bento layout (6-col base) */
+.skills-top-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;align-items:stretch;}
+.skills-top-grid .s2{grid-column:span 2;}
+.skills-top-grid .s3{grid-column:span 3;}
+
+/* Categories now come from the admin-managed store, so the count is no
+   longer fixed at five - this variant reflows any number of cards instead
+   of relying on hand-picked column spans. */
+/* 320px (not 260px) keeps this at a steady 3-per-row on desktop widths,
+   matching the intended bento layout - 260px let a 4th column sneak in on
+   wide screens, which left a lone odd card isolated in its own row with a
+   large empty gap beside it whenever the category count didn't divide
+   evenly by 4. */
+/* Flexbox instead of CSS Grid: with a fixed grid, a short last row (e.g.
+   just "Tools & Platforms" + "Cloud Platforms") leaves the grid's unused
+   column empty rather than letting the two cards fill the row. Flex-basis
+   + flex-grow lets any row - full or partial - stretch evenly to fill the
+   available width, and cards wrap to a new line on their own once they no
+   longer fit, so this also replaces the old min-width breakpoint rules for
+   this variant. */
+.skills-top-grid--auto{display:flex;flex-wrap:wrap;}
+.skills-top-grid--auto .skill-cat-card{flex:1 1 320px;}
+
+
+/* accent colour cycle for categories added through /admin (no cat-* class) */
+.skill-cat-card.accent-1{--accent:var(--blue);}
+.skill-cat-card.accent-2{--accent:var(--teal);}
+.skill-cat-card.accent-3{--accent:var(--purple);}
+.skill-cat-card.accent-4{--accent:var(--gold);}
+.skill-cat-card.accent-5{--accent:var(--indigo);}
+
+.skill-cat-card{--accent:var(--purple);display:flex;flex-direction:column;height:100%;
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease);}
+.skill-cat-card:hover{transform:translateY(-8px);border-color:var(--accent);
+  box-shadow:0 20px 40px -18px color-mix(in srgb,var(--accent) 45%,transparent);}
+
+/* Featured card (AI/ML): always shown with an accent border + soft glow,
+   not just on hover, so it reads as the "headline" category at a glance -
+   matches the highlighted look on the live site. */
+.skill-cat-card--wide{border-color:var(--accent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent),
+    0 20px 40px -22px color-mix(in srgb,var(--accent) 40%,transparent);}
+.skill-cat-card--wide:hover{box-shadow:0 0 0 1px var(--accent),
+    0 24px 48px -18px color-mix(in srgb,var(--accent) 55%,transparent);}
+
+.skill-cat-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.skill-cat-icon{width:50px;height:50px;border-radius:14px;background:var(--bg);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;flex:none;color:var(--accent);
+  box-shadow:0 6px 16px -10px var(--accent);}
+.skill-cat-icon svg{width:26px;height:26px;}
+.skill-cat-head h4{font-size:1.04rem;font-weight:700;line-height:1.2;}
+.skill-cat-head > div > span{display:block;font-size:.78rem;color:var(--muted);
+  font-weight:500;margin-top:3px;font-family:'Inter',sans-serif;}
+
+.skill-cat-tags{display:flex;flex-wrap:wrap;gap:9px;align-content:flex-start;}
+.skill-cat-tags > span{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;
+  border:1px solid var(--line);background:var(--bg);border-radius:999px;
+  font-size:.82rem;font-weight:600;color:var(--ink);box-shadow:0 3px 10px rgba(20,20,60,.05);
+  transition:transform .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),background .18s var(--ease);}
+.skill-cat-tags > span:hover{transform:translateY(-2px);background:var(--accent);border-color:var(--accent);color:#fff;
+  box-shadow:0 8px 18px -8px var(--accent);}
+.skill-cat-tags > span i{font-size:1.05rem;line-height:1;color:var(--accent);transition:color .18s var(--ease);}
+.skill-cat-tags > span .ico{width:15px;height:15px;flex:none;color:var(--accent);transition:color .18s var(--ease);}
+.skill-cat-tags > span:hover i,.skill-cat-tags > span:hover .ico{color:#fff;}
+
+/* wide AI feature card with 3 sub-groups */
+.skill-cat-card--wide .skill-subgroups{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.skill-cat-card--wide .skill-subgroup{padding-left:18px;border-left:2px solid var(--line);}
+.skill-subgroup-label{font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:11px;}
+
+/* per-category accent colour */
+.cat-lang{--accent:var(--blue);}
+.cat-web{--accent:var(--teal);}
+.cat-ai{--accent:var(--purple);}
+.cat-db{--accent:var(--gold);}
+.cat-tools{--accent:var(--indigo);}
+.cat-cloud{--accent:var(--blue);}
+
+@media (max-width:1024px){
+  .skills-top-grid{grid-template-columns:repeat(2,1fr);}
+  .skills-top-grid .s2,.skills-top-grid .s3{grid-column:span 1;}
+  .skills-top-grid .cat-cloud{grid-column:span 2;}
+}
+@media (max-width:680px){
+  .skills .projects-head,.skills-cat-grid{padding:0 20px;}
+  .skills-top-grid{grid-template-columns:1fr;gap:16px;}
+  .skills-top-grid .s2,.skills-top-grid .s3,.skills-top-grid .cat-cloud{grid-column:auto;}
+  .skills-cat-grid{gap:16px;}
+  .skill-cat-card{padding:20px;}
+  .skill-cat-card--wide .skill-subgroups{grid-template-columns:1fr;gap:20px;}
+  .skill-cat-card--wide .skill-subgroup{padding-left:0;border-left:none;
+    padding-top:16px;border-top:1px solid var(--line);}
+  .skill-cat-card--wide .skill-subgroup:first-child{padding-top:0;border-top:none;}
+}
+
+/* ===== EXPERIENCE ===== */
+
+.experience{max-width:1500px;margin:0 auto;padding:0 32px 15px;position:relative;}
+.timeline-item{max-width:720px;}
+.timeline::before{content:'';position:absolute;left:38px;top:6px;bottom:6px;width:2px;background:var(--line);}
+.timeline-item{display:flex;gap:24px;margin-bottom:36px;position:relative;}
+.timeline-dot{width:14px;height:14px;border-radius:50%;background:var(--grad);margin-top:6px;flex:none;box-shadow:0 0 0 6px var(--bg-soft);z-index:1;}
+.timeline-content h4{font-size:1.02rem;margin-bottom:6px;}
+.timeline-content h4 span{color:var(--muted);font-weight:500;font-size:.85rem;}
+.timeline-content p{color:var(--muted);font-size:.92rem;}
+.timeline-content .timeline-duration{font-size:.8rem;font-weight:600;color:var(--accent,#6d5ff5);margin-bottom:4px;}
+
+/* ===== CERTIFICATIONS ===== */
+
+.certifications{max-width:1500px;margin:0 auto;padding:0 32px 15px;}
+.cert-grid{max-width:1400px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.cert-card{--accent:var(--purple);display:flex;flex-direction:column;overflow:hidden;text-decoration:none;
+  border:1px solid var(--line);border-radius:16px;background:var(--bg-soft);
+  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);}
+.cert-card:hover{transform:translateY(-6px);border-color:var(--accent);
+  box-shadow:0 22px 44px -22px color-mix(in srgb,var(--accent) 45%,transparent);}
+.cert-thumb{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;overflow:hidden;background:#fff;border-bottom:1px solid var(--line);}
+.cert-thumb .work-thumb-glyph{color:var(--muted);}
+.cert-thumb img{width:100%;height:100%;object-fit:contain;padding:8px;display:block;
+  transition:transform .35s var(--ease);}
+.cert-card:hover .cert-thumb img{transform:scale(1.04);}
+.cert-body{display:flex;flex-direction:column;gap:3px;padding:16px 18px 18px;}
+.cert-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--ink);line-height:1.25;}
+.cert-issuer{font-size:.86rem;font-weight:600;color:var(--accent);}
+.cert-meta{font-size:.78rem;color:var(--muted);margin-top:1px;}
+
+/* ===== EDUCATION ===== */
+.education{max-width:1500px;margin:0 auto;padding:0 32px 15px;}
+.education-grid{max-width:1100px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.edu-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--bg-soft);transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
+.edu-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -28px rgba(23,27,43,.25);}
+.edu-card h4{font-size:1.05rem;font-weight:700;margin-bottom:10px;line-height:1.4;}
+.edu-status{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:600;color:#12B886;background:rgba(18,184,134,.12);padding:4px 10px;border-radius:999px;margin-bottom:16px;}
+.edu-item{color:var(--muted);font-size:.92rem;margin-bottom:9px;}
+.edu-item:last-child{margin-bottom:0;}
+.edu-score{font-weight:700;color:var(--ink);margin-top:6px;}
+@media (max-width:640px){
+  .education-grid{grid-template-columns:1fr;}
+}
+
+/* ===== CONTACT ===== */
+.contact-page{max-width:1280px;margin:0 auto;padding:15px 32px 20px;}
+.contact-page-head{max-width:640px;margin:0 auto 40px;text-align:center;}
+.contact-page-head h1{font-size:2rem;font-weight:800;margin-bottom:10px;}
+.contact-page-head p{color:var(--muted);font-size:.95rem;}
+.contact-grid{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start;}
+.contact-form{max-width:none;padding:0;display:flex;flex-direction:column;gap:16px;border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--bg);}
+.contact-form .field{display:flex;flex-direction:column;gap:6px;}
+.contact-form .field label{font-size:.78rem;font-weight:600;color:var(--muted);}
+.form-note{color:var(--muted);font-size:.78rem;}
+.form-row{display:flex;gap:16px;}
+.contact-form input,.contact-form textarea{border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:.95rem;width:100%;background:var(--bg);color:var(--ink);}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--blue);}
+.contact-form button{align-self:flex-start;}
+.form-status{font-size:.88rem;color:var(--teal);min-height:1.2em;}
+
+.contact-side{display:flex;flex-direction:column;gap:20px;}
+
+.direct-lines{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--bg-soft);display:flex;flex-direction:column;gap:14px;}
+.direct-lines h3{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:4px;}
+.direct-line-item{display:flex;align-items:center;gap:12px;}
+.direct-line-icon{width:38px;height:38px;flex:none;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--purple);display:flex;align-items:center;justify-content:center;}
+.direct-line-icon--whatsapp{color:var(--teal);}
+.direct-line-label{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.direct-line-text span:not(.direct-line-label){font-weight:600;color:var(--ink);word-break:break-word;}
+
+/* Clickable rows (WhatsApp, Email): bordered card + arrow that nudges on
+   hover, so the two ways to reach me directly stand out from the plain
+   location/timezone rows. */
+.direct-line-item--link{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);text-decoration:none;transition:border-color .2s ease, transform .2s ease;}
+.direct-line-item--link:hover{border-color:var(--teal);transform:translateY(-1px);}
+.direct-line-item--link .direct-line-text span:not(.direct-line-label){color:var(--blue);}
+.direct-line-item--link .direct-line-icon--whatsapp + .direct-line-text span:not(.direct-line-label){color:var(--teal);}
+.direct-line-go{margin-left:auto;flex:none;color:var(--muted);transition:transform .2s ease, color .2s ease;}
+.direct-line-item--link:hover .direct-line-go{color:var(--teal);transform:translateX(3px);}
+
+.response-times{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--bg-soft);}
+.response-times h3{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:16px;}
+.response-time-list{display:flex;flex-direction:column;gap:14px;}
+.response-time-list li{display:flex;align-items:center;gap:10px;font-size:.9rem;}
+.response-dot{width:9px;height:9px;border-radius:50%;flex:none;}
+.response-dot--teal{background:var(--teal);}
+.response-dot--blue{background:var(--blue);}
+.response-dot--purple{background:var(--purple);}
+.response-time-label{color:var(--ink);font-weight:600;}
+.response-time-value{margin-left:auto;color:var(--muted);}
+
+@media (max-width:800px){
+  .contact-grid{grid-template-columns:1fr;}
+}
+
+/* ===== CTA BANNER ===== */
+.cta-banner{max-width:1280px;margin:96px auto 0;padding:0 32px;}
+.cta-banner-inner{border:1px solid var(--line);border-radius:24px;padding:64px 40px;text-align:center;background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--purple) 10%, transparent), transparent 55%),
+    radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--blue) 10%, transparent), transparent 55%),
+    var(--bg-soft);
+}
+.cta-banner-inner h2{font-size:2rem;font-weight:800;margin-bottom:14px;}
+.cta-banner-inner p{color:var(--muted);max-width:560px;margin:0 auto 28px;font-size:1.02rem;}
+.cta-banner-actions{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
+.cta-email{font-weight:700;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:13px 24px;background:var(--bg);transition:border-color .2s var(--ease),transform .2s var(--ease);}
+.cta-email:hover{border-color:var(--accent);transform:translateY(-2px);}
+
+@media (max-width:560px){
+  .cta-banner-inner{padding:44px 24px;}
+  .cta-banner-inner h2{font-size:1.5rem;}
+  .section-title{font-size:1.9rem;flex-wrap:wrap;}
+}
+
+/* ===== FOOTER ===== */
+.footer{padding:60px 32px 40px;color:var(--muted);font-size:.9rem;margin-top:80px;background:linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);border-top:1px solid color-mix(in srgb, var(--ink) 10%, transparent);}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:48px;}
+.footer-col .logo{margin-bottom:16px;}
+.footer-about{max-width:320px;line-height:1.6;font-size:.88rem;}
+.footer-col .footer-socials{margin-top:20px;}
+.footer-socials--touch{justify-content:flex-start;margin-bottom:0;}
+.footer-heading{color:var(--ink);font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:28px;position:relative;padding-bottom:12px;}
+.footer-heading::after{content:"";position:absolute;left:0;bottom:0;width:40px;height:3px;background:var(--grad);border-radius:10px;}
+.footer-links{display:flex;flex-direction:column;gap:12px;font-size:.88rem;}
+.footer-links a{color:var(--muted);transition:color .2s var(--ease), transform .2s var(--ease);display:inline-flex;align-items:center;gap:6px;}
+.footer-links a::after{content:"→";opacity:0;transform:translateX(-4px);transition:opacity .2s var(--ease), transform .2s var(--ease);font-size:.85em;}
+.footer-links a:hover{color:var(--purple);transform:translateX(4px);}
+.footer-links a:hover::after{opacity:1;transform:translateX(0);}
+.footer-quicklinks a{position:relative;padding-bottom:2px;}
+.footer-quicklinks a::before{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:1.5px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease);}
+.footer-quicklinks a:hover::before{transform:scaleX(1);}
+.footer-contact li{display:flex;align-items:center;gap:14px;}
+.footer-contact li a{transition:color .2s var(--ease), transform .2s var(--ease);}
+.footer-contact-icon{width:30px;height:30px;flex:none;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--purple);display:flex;align-items:center;justify-content:center;transition:transform .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);}
+.footer-services li:hover .footer-contact-icon{transform:rotate(8deg) scale(1.12);color:var(--blue);border-color:var(--blue);background:color-mix(in srgb, var(--blue) 10%, var(--bg));}
+.footer-bottom{position:relative;max-width:1280px;margin:0 auto;padding:22px 64px 26px;border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);display:flex;align-items:center;justify-content:center;gap:16px;font-size:.82rem;text-align:center;}
+.footer-bottom p{line-height:1.7;}
+.footer-bottom .back-to-top{position:absolute;right:32px;top:50%;margin-top:-20px;}
+.footer-cta-btn{margin-top:22px;padding:11px 22px;font-size:.9rem;}
+.back-to-top{width:40px;height:40px;border-radius:50%;border:none;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px color-mix(in srgb, var(--purple) 35%, transparent);transition:transform .25s var(--ease), box-shadow .25s var(--ease);}
+.back-to-top:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 8px 20px color-mix(in srgb, var(--purple) 45%, transparent);}
+
+@media (max-width:900px){
+  .footer-inner{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:560px){
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;padding-left:24px;padding-right:24px;}
+  .footer-bottom .back-to-top{position:static;margin-top:6px;}
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{order:-1;}
+  .capability-strip{grid-template-columns:repeat(2,1fr);}
+  .cap-card{border-bottom:1px solid var(--line);}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .cert-grid{grid-template-columns:repeat(2,1fr);}
+  .about-intro-cards{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  .about-pillars{grid-template-columns:repeat(2,1fr);}
+  .cert-grid{grid-template-columns:1fr;padding:0 20px;}
+}
+@media (max-width:760px){
+  .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .burger{display:flex;}
+  .hero-text h1{font-size:clamp(2rem, 7.5vw, 2.4rem);line-height:1.1;}
+  .hero-text h1.hero-title{font-size:clamp(2.2rem, 8vw, 2.6rem);line-height:1.05;}
+  .form-row{flex-direction:column;}
+}
+
+/* ===== DARK THEME OVERRIDES ===== */
+html[data-theme="dark"] .avatar-glow{background:radial-gradient(circle,rgba(139,123,255,.18) 0%, rgba(139,123,255,0) 70%);}
+html[data-theme="dark"] .icon-purple,
+html[data-theme="dark"] .proj-purple,
+html[data-theme="dark"] .tag-nlp{background:rgba(139,123,255,.16);}
+html[data-theme="dark"] .icon-python,
+html[data-theme="dark"] .icon-blue,
+html[data-theme="dark"] .proj-blue,
+html[data-theme="dark"] .tag-cv{background:rgba(111,155,255,.16);}
+html[data-theme="dark"] .icon-teal,
+html[data-theme="dark"] .proj-green,
+html[data-theme="dark"] .tag-ml{background:rgba(47,217,160,.16);}
+html[data-theme="dark"] .icon-indigo,
+html[data-theme="dark"] .proj-indigo,
+html[data-theme="dark"] .tag-web{background:rgba(132,120,240,.18);}
+html[data-theme="dark"] .stack span{background:var(--bg-soft);}
+html[data-theme="dark"] .cert-card{background:var(--bg-soft);}
+html[data-theme="dark"] .btn-outline{background:rgba(30,32,48,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--blue);border:1px solid rgba(139,155,255,.2);}
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .navbar{box-shadow:none;}
+/* ===================================================================
+   MOBILE FIXES  (<= 760px only)
+   Appended last so these rules win over the earlier media queries
+   without needing !important. Every rule below sits inside a
+   max-width media query, so the desktop rendering above is unchanged.
+   =================================================================== */
+
+/* The one rule outside a media query. It only hides the new menu-only
+   link that did not exist before, so nothing about the existing
+   desktop layout moves. */
+.nav-mobile-only{display:none;}
+
+@keyframes navItemIn{
+  from{opacity:0;transform:translateY(-6px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media (max-width:760px){
+
+  /* Stops any single wide element (floating cards, long unbroken
+     words) from creating a horizontal scrollbar. "clip" is used
+     instead of "hidden" because "hidden" on an ancestor breaks
+     position:sticky, which the navbar relies on. */
+  html{overflow-x:clip;}
+  body{overflow-x:clip;}
+  img,svg,video,canvas{max-width:100%;}
+
+  /* ---- Burger animates into a close icon ----
+     script.js already toggles .active on the button; there was no rule
+     for it, so the icon never changed state. */
+  .burger span{transition:transform .25s var(--ease), opacity .2s var(--ease);}
+  .burger.active span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .burger.active span:nth-child(2){opacity:0;}
+  .burger.active span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  .burger{padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
+
+  /* ---- Mobile menu ----
+     THE MAIN FIX. script.js toggles .open on #navLinks, but no rule
+     existed to reveal it, so tapping the burger did nothing at all.
+     The panel is inset from both edges so it reads as a floating card
+     rather than a full-bleed slab, and drops out of the navbar, which
+     is position:sticky and therefore its containing block. */
+  .nav-links{
+    display:flex;
+    position:absolute;
+    top:100%;
+    left:10px;
+    right:10px;
+    margin-top:8px;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    flex:none;
+    gap:2px;
+    padding:8px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 26px 50px -26px rgba(10,15,36,.5);
+    /* Hidden by default. visibility (not display) keeps the fade usable. */
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-10px) scale(.98);
+    transform-origin:top center;
+    transition:opacity .22s var(--ease), transform .22s var(--ease), visibility .22s;
+  }
+  .nav-links.open{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0) scale(1);
+  }
+
+  .nav-links a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    /* 46px keeps every row a comfortable thumb target. */
+    min-height:46px;
+    padding:0 14px;
+    border-radius:12px;
+    font-size:.98rem;
+    font-weight:600;
+    color:var(--ink);
+  }
+  /* Chevron marks each row as tappable without needing extra markup. */
+  .nav-links a::after{
+    content:"›";
+    font-size:1.15rem;
+    line-height:1;
+    color:var(--muted);
+    opacity:.55;
+  }
+
+  /* Rows fade in one after another once the panel is open. */
+  .nav-links.open a{animation:navItemIn .26s var(--ease) backwards;}
+  .nav-links.open a:nth-child(1){animation-delay:.03s;}
+  .nav-links.open a:nth-child(2){animation-delay:.06s;}
+  .nav-links.open a:nth-child(3){animation-delay:.09s;}
+  .nav-links.open a:nth-child(4){animation-delay:.12s;}
+  .nav-links.open a:nth-child(5){animation-delay:.15s;}
+  .nav-links.open a:nth-child(6){animation-delay:.18s;}
+  .nav-links.open a:nth-child(7){animation-delay:.21s;}
+
+  /* ---- Contact CTA stays in the navbar ----
+     It was display:none below 760px, which left no way to reach the
+     contact page from a phone. Kept visible next to the burger instead,
+     compacted so the whole row still fits a 390px screen. */
+  .nav-cta{
+    display:inline-flex;
+    align-items:center;
+    flex:none;
+    padding:9px 15px;
+    font-size:.82rem;
+    font-weight:700;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  /* The arrow costs width and says nothing the label doesn't. */
+  .nav-cta .arrow{display:none;}
+
+  /* The logo is the only element allowed to give up width when the row
+     gets tight, so the controls never get squashed. */
+  .nav-inner{gap:10px;}
+  .logo{flex:0 1 auto;min-width:0;}
+  .logo-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .theme-toggle,.burger{flex:none;}
+
+  /* ---- Push toggle + Contact Me + burger to the right edge ----
+     nav-links is taken out of flow (position:absolute) on mobile, so
+     without this the remaining row (logo, then these three controls)
+     just packs to the left, leaving empty space on the right. The auto
+     margin on the first control in that group eats all the leftover
+     space, pinning the whole cluster flush against the right edge. */
+  .theme-toggle{margin-left:auto;}
+
+  /* Redundant now that the navbar CTA is visible. The markup stays in
+     the templates, so removing this line brings it back. */
+  .nav-links a.nav-mobile-only{display:none;}
+
+  /* ---- iOS zoom fix ----
+     Safari on iPhone zooms the whole page in when a focused input has a
+     font-size below 16px, and never zooms back out. The inputs were at
+     .95rem (~15.2px), which triggered it on every field tap. */
+  .contact-form input,
+  .contact-form textarea,
+  .project-form input,
+  .project-form textarea,
+  .project-form select{font-size:16px;}
+
+  /* Full-width submit is far easier to hit one-handed than a button
+     pinned to the left edge. */
+  .contact-form button{align-self:stretch;width:100%;justify-content:center;}
+
+  .hero-visual{min-height:auto;padding:20px 8px;}
+}
+
+@media (max-width:560px){
+
+  /* ---- Nested padding ----
+     Several sections sat inside another 32px-padded wrapper, so a 360px
+     phone lost 64px to gutters before the card's own 28px padding was
+     applied - roughly a third of the screen. Outer gutter only now. */
+  .contact-page{padding:12px 16px 20px;}
+  .contact-grid{padding:0;gap:18px;}
+  .contact-side{gap:16px;}
+  .contact-form{padding:20px;gap:14px;}
+  .direct-lines{padding:20px;gap:18px;}
+  .response-times{padding:20px;}
+
+  .about,.skills,.experience,.certifications,.education,.projects{
+    padding-left:16px;padding-right:16px;
+  }
+  .about-grid,.skills-grid,.education-grid,.cert-grid{
+    padding-left:0;padding-right:0;
+  }
+  .section-head{padding:0 16px;margin-top:20px;margin-bottom:20px;}
+  .cta-banner{padding:0 16px;margin-top:64px;}
+
+  .footer{padding:48px 20px 32px;margin-top:56px;}
+  .footer-inner{gap:32px;padding-bottom:32px;}
+  .footer-bottom{padding:22px 0 26px;}
+
+  /* Two columns at this width leaves each card too narrow to read. */
+  .about-pillars{grid-template-columns:1fr;}
+  .capability-strip{grid-template-columns:1fr;}
+
+  .contact-page-head{margin-bottom:28px;}
+  .contact-page-head h1{font-size:1.7rem;}
+
+  /* Long addresses were pushing the card wider than the screen. */
+  .direct-line-item a{word-break:break-word;overflow-wrap:anywhere;}
+}
+
+@media (max-width:430px){
+  .nav-cta{padding:9px 13px;font-size:.8rem;}
+}
+
+@media (max-width:400px){
+  .logo-text{font-size:.95rem;}
+  .nav-inner{gap:8px;padding:10px 12px;}
+  .contact-form{padding:16px;}
+  .direct-lines{padding:16px;}
+  .response-times{padding:16px;}
+}
+
+@media (max-width:760px) and (prefers-reduced-motion: reduce){
+  .nav-links{transition:opacity .01s;}
+  .nav-links.open a{animation:none;}
+  .burger span{transition:none;}
+}
+
+/* ===================================================================
+   iOS SAFARI / iPHONE  (<= 760px only)
+   Targeted at iPhone 12 Pro (390 x 844, iOS Safari), but applies to
+   every iPhone. Kept inside media queries so desktop is untouched.
+   =================================================================== */
+
+@media (max-width:760px){
+
+  /* ---- Safari needs the prefixed property ----
+     Three of the five backdrop-filter rules in this file were missing
+     -webkit-backdrop-filter, so the blur silently did nothing on iOS
+     (Safari only dropped the prefix in version 18). The navbar in
+     particular just looked flat-transparent instead of frosted.
+     Move these out of the media query if you want desktop Safari
+     fixed as well. */
+  .navbar{-webkit-backdrop-filter:blur(10px);}
+  .hero .capability-strip{-webkit-backdrop-filter:blur(6px);}
+  .availability-badge{-webkit-backdrop-filter:blur(6px);}
+
+  /* Safari inflates text in landscape unless told not to. */
+  html{-webkit-text-size-adjust:100%;}
+
+  /* Removes the grey flash iOS paints over every tapped link. The
+     hover/active styles already give feedback. */
+  a,button,.burger,.theme-toggle{-webkit-tap-highlight-color:transparent;}
+
+  /* ---- Landscape ----
+     Rotated, an iPhone 12 Pro is only 390px tall. The menu is roughly
+     400px with all seven rows, so it ran off the bottom with no way to
+     reach the last items. It scrolls now instead. dvh accounts for
+     Safari's collapsing toolbar; the vh line above is the fallback for
+     older iOS. */
+  .nav-links{
+    max-height:calc(100vh - 96px);
+    max-height:calc(100dvh - 96px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
+
+  /* ---- Notch and home indicator ----
+     Paired with viewport-fit=cover in the HTML. In portrait these
+     resolve to 0 and nothing moves; in landscape they keep content
+     clear of the notch, and they lift the footer above the home bar. */
+  .nav-inner{
+    padding-left:max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+  }
+  .nav-links{
+    left:max(10px, env(safe-area-inset-left));
+    right:max(10px, env(safe-area-inset-right));
+  }
+
+  /* The 88vh modal was taller than the visible area whenever Safari's
+     toolbar was showing, hiding its bottom edge and the submit button. */
+  .project-form-card{
+    max-height:80vh;
+    max-height:80dvh;
+  }
+}
+
+@media (max-width:560px){
+  .contact-page{
+    padding-left:max(16px, env(safe-area-inset-left));
+    padding-right:max(16px, env(safe-area-inset-right));
+  }
+  .about,.skills,.experience,.certifications,.education,.projects{
+    padding-left:max(16px, env(safe-area-inset-left));
+    padding-right:max(16px, env(safe-area-inset-right));
+  }
+  .footer{
+    padding-left:max(20px, env(safe-area-inset-left));
+    padding-right:max(20px, env(safe-area-inset-right));
+    padding-bottom:calc(32px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---- iPhone 12 Pro portrait (390px) and similar ----
+   Sits between the 400px block above and the smaller phones, so the
+   type has a little more room than a 360px device gets. */
+@media (min-width:381px) and (max-width:430px){
+  .contact-form{padding:18px;}
+  .direct-lines{padding:18px;}
+  .response-times{padding:18px;}
+  .contact-page-head h1{font-size:1.8rem;}
+}
+
+/* ===================================================================
+   HERO IMAGE — ORDER BUG FIX
+   The three mobile background-size rules (lines 124-135 of the original)
+   were being overridden by the unconditional .hero-inner rule further
+   down the file, which sets background-size:900px and position:right
+   bottom. Identical specificity, so the later rule won and the image
+   rendered 900px wide on every phone, cropped hard at both edges.
+   Re-applied here, at the end of the file, where they actually take
+   effect. Sizes use min() so the image scales with the viewport
+   instead of jumping at each breakpoint.
+   =================================================================== */
+
+@media (max-width:900px){
+  .hero-inner{
+    background-size:min(560px, 100%) auto;
+    background-position:center bottom;
+    min-height:0;
+    padding-bottom:min(400px, 64%);
+  }
+}
+
+@media (max-width:560px){
+  .hero-inner{
+    /* Full container width. The old fixed 340px left the illustration
+       floating in the middle of a much wider strip. */
+    background-size:100% auto;
+    background-position:center bottom;
+    min-height:0;
+    /* Percentage padding resolves against the container WIDTH, so this
+       reserves a strip the same shape as the image and scales with the
+       screen instead of leaving a fixed gap. 62% assumes a roughly 16:9
+       illustration - see the note if the spacing looks off. */
+    padding-bottom:62%;
+  }
+}
+
+@media (max-width:400px){
+  .hero-inner{
+    background-size:100% auto;
+    padding-bottom:62%;
+  }
+}
+
+/* ===================================================================
+   MOBILE-ONLY REQUESTED TWEAKS (<= 760px / <= 480px only)
+   Every rule here sits inside a max-width media query, so desktop is
+   completely unaffected.
+   =================================================================== */
+
+@media (max-width:760px){
+  /* ---- Hero side padding ----
+     Reinforces the existing .hero gutter so hero text never sits flush
+     against the screen edge on narrow phones. */
+  .hero{padding-inline:20px;}
+
+  /* ---- Hero illustration ----
+     A touch bigger so it reads clearly on mobile instead of looking
+     hidden/cropped at the very bottom of the hero. */
+  .hero-inner{background-size:90% auto;background-position:center bottom;}
+
+  /* ---- Hamburger: bigger touch target, clear space from Contact Me
+     button and the screen edge (matches reference spacing) ---- */
+  .burger{
+    width:46px;
+    height:46px;
+    min-width:46px;
+    min-height:46px;
+    margin-left:20px;
+  }
+  .burger span{width:24px;}
+  .nav-inner{padding-right:24px;}
+
+  /* ---- Push theme toggle + Contact Me + burger to the right ----
+     .nav-links used to do this (flex:1 on desktop shoves everything
+     after it to the far edge), but it's display:none on mobile, so
+     that push disappears and the group sits right after the logo with
+     empty space wasted on the right. margin-left:auto on the first of
+     the group re-creates the same right-alignment on mobile. */
+  .theme-toggle{margin-left:auto;}
+
+  /* ---- Show the full "AI/ML DEVELOPER" wordmark again ----
+     .logo-text already truncates with an ellipsis if space runs out
+     (white-space:nowrap; text-overflow:ellipsis), so it's safe to show
+     "DEVELOPER" here; it'll shrink gracefully instead of breaking the
+     row. */
+  .logo-text b{display:inline;}
+}
+
+@media (max-width:480px){
+  /* ---- Greeting badge: short name on small phones ---- */
+  .hero-greet-name-full{display:none;}
+  .hero-greet-name-short{display:inline;}
+
+  /* ---- Hero buttons: full width, centered label ---- */
+  .hero-actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* ---- Capability badges: drop the "|" separators ---- */
+  .hero-badge-sep{display:none;}
+}
+/* ===== NAVBAR CONTROLS — tighter group, flush to the right edge =====
+   The theme toggle, "Contact Me" pill and burger were sitting with a
+   wide gap between them and a chunk of empty space after the burger.
+   This block is last in the file, so it overrides the earlier mobile
+   navbar rules (gap:10px / padding-right:24px / burger margin-left:20px). */
+@media (max-width:760px){
+  .nav-inner{
+    gap:4px;                                        /* was 10px */
+    padding-right:max(10px, env(safe-area-inset-right));  /* was 24px */
+  }
+
+  /* Eats all the leftover width so the three controls stay pinned right. */
+  .theme-toggle{margin-left:auto;margin-right:0;}
+
+  .nav-cta{margin:0;padding:9px 14px;}
+
+  /* Slightly smaller box (still a 44px+ touch target) and no left margin,
+     so it sits right next to the CTA. The small negative right margin
+     cancels the button's own inner padding so the icon looks optically
+     flush with the screen edge. */
+  .burger{
+    width:44px;height:44px;min-width:44px;min-height:44px;
+    margin-left:0;
+    margin-right:-6px;
+  }
+}
+
+@media (max-width:400px){
+  .nav-inner{
+    gap:3px;
+    padding-left:12px;
+    padding-right:max(8px, env(safe-area-inset-right));
+  }
+}
+
+/* ===== "Contact Me" pill — smaller and nudged further right (mobile only) =====
+   Desktop is untouched: everything here lives inside the 760px query. */
+@media (max-width:760px){
+  .nav-cta{
+    padding:7px 12px;      /* was 9px 14px */
+    font-size:.75rem;      /* was .82rem */
+    letter-spacing:.1px;
+    margin-left:6px;       /* small breathing room from the theme toggle */
+    margin-right:-4px;     /* pulls it right, closer to the burger */
+  }
+}
+
+/* ===== Final mobile navbar fit — "AI/ML DEVELOPER" fully visible =====
+   The logo text was getting cut off by the ellipsis because the three
+   controls were eating the row. Everything on the right is compacted a
+   few px and pushed further right, which hands the freed width back to
+   the wordmark. Desktop untouched (all inside the 760px query). */
+@media (max-width:760px){
+  /* Theme toggle: a bit smaller and nudged right (the 6px gap it had
+     from the CTA is gone), so it sits tight against the Contact pill. */
+  .theme-toggle{
+    width:34px;
+    height:34px;
+    margin-left:auto;   /* still pins the whole group to the right edge */
+    margin-right:2px;
+  }
+  .theme-toggle__icon svg{width:17px;height:17px;}
+
+  .nav-cta{
+    margin-left:0;
+    margin-right:-4px;
+    padding:7px 11px;
+    font-size:.72rem;
+  }
+
+  .burger{
+    width:40px;height:40px;min-width:40px;min-height:40px;
+    margin-right:-6px;
+  }
+  .burger span{width:22px;}
+
+  /* Tighter left gutter + slightly smaller lockup = enough room for the
+     full wordmark instead of "AI/ML DEVELOP…". */
+  .nav-inner{gap:2px;padding-left:14px;}
+  .logo{gap:8px;}
+  .logo-icon{width:30px;height:30px;border-radius:8px;font-size:.72rem;}
+  .logo-text{font-size:.92rem;letter-spacing:-.2px;}
+  .logo-text b{display:inline;}
+}
+
+@media (max-width:400px){
+  .nav-inner{padding-left:12px;gap:2px;}
+  .logo-text{font-size:.86rem;}
+  .nav-cta{padding:7px 10px;font-size:.7rem;}
+}
+
+/* ===== Slightly more breathing room between the three nav controls =====
+   Only a few px each — and the CTA padding / wordmark size are trimmed by
+   about the same amount, so the row stays the same total width and
+   "DEVELOPER" still fits without an ellipsis. Mobile only. */
+@media (max-width:760px){
+  .theme-toggle{margin-right:6px;}   /* gap to the Contact pill: 2px -> 6px */
+  .nav-cta{margin-right:0;padding:7px 10px;}  /* gap to burger: -4px -> 0 */
+  .logo-text{font-size:.9rem;}
+}
+
+@media (max-width:400px){
+  .theme-toggle{margin-right:5px;}
+  .nav-cta{margin-right:0;padding:7px 9px;}
+  .logo-text{font-size:.85rem;}
+}
+
+/* ===== Capability strip on mobile: icons only, all four in one row =====
+   The headings + taglines made this a tall 4-row block on a phone. Text
+   is hidden below 760px and the strip goes back to 4 equal columns, so
+   it reads as a compact icon bar. Desktop keeps the full cards. */
+@media (max-width:760px){
+  .capability-strip{
+    grid-template-columns:repeat(4,1fr);
+    margin-inline:20px;
+  }
+  .cap-card{
+    justify-content:center;
+    gap:0;
+    padding:14px 4px;
+    border-bottom:none;                     /* undoes the 2-column rule */
+    border-right:1px solid var(--line);
+  }
+  .cap-card:last-child{border-right:none;}
+  .cap-card:hover{transform:none;}          /* no hover lift on touch */
+
+  /* The text block is the second child of each card. */
+  .cap-card > div:not(.cap-icon){display:none;}
+
+  .cap-icon{width:46px;height:46px;border-radius:12px;}
+  .cap-icon svg{width:30px;height:30px;}
+}
+
+@media (max-width:400px){
+  .capability-strip{margin-inline:14px;}
+  .cap-card{padding:12px 2px;}
+  .cap-icon{width:40px;height:40px;border-radius:10px;}
+  .cap-icon svg{width:26px;height:26px;}
+}
+
+/* ===== Tighten the gap between the icon strip and "About Me" (mobile) =====
+   The space was three stacked values: the hero's bottom padding, the
+   strip's top margin and the section heading's 64px top margin. All three
+   are trimmed here; desktop keeps its original breathing room. */
+@media (max-width:760px){
+  .hero{padding-bottom:14px;}
+  .capability-strip{margin-top:14px;}
+  /* Scoped to .about so other section headings keep their spacing. */
+  .about .section-head{margin-top:10px;margin-bottom:18px;}
+}
+
+/* ===== Section subtitles: long on desktop, short on mobile =====
+   Both versions live in the markup; only one is ever rendered. */
+.head-sub-short{display:none;}
+@media (max-width:760px){
+  .head-sub-full{display:none;}
+  .head-sub-short{display:inline;}
+}
+
+/* ===== Footer on mobile: only Brand + Get In Touch =====
+   "Quick Links" duplicates the burger menu and "Services" is already
+   covered by the page, so both columns are dropped on a phone. Desktop
+   still shows all four (everything here is inside the 760px query). */
+@media (max-width:760px){
+  .footer-inner > .footer-col:nth-child(2),   /* Quick Links */
+  .footer-inner > .footer-col:nth-child(3){   /* Services */
+    display:none;
+  }
+
+  /* Social icons move up next to the "India" line instead of sitting on
+     their own row: absolute positioning takes them out of flow and pins
+     them to the right edge, level with the bottom of the contact list. */
+  .footer-inner > .footer-col:last-child{position:relative;}
+  .footer-inner > .footer-col:last-child .footer-socials{
+    position:absolute;
+    right:0;
+    bottom:0;
+    margin:0;
+    gap:10px;
+  }
+  .footer-inner > .footer-col:last-child .footer-socials .social-icon{
+    width:36px;height:36px;
+  }
+  .footer-inner > .footer-col:last-child .footer-socials .social-icon svg{
+    width:16px;height:16px;
+  }
+  /* Keeps the location text from running under the icons. */
+  .footer-inner > .footer-col:last-child .footer-contact li:last-child{
+    padding-right:136px;
+  }
+}
+
+@media (max-width:400px){
+  .footer-inner > .footer-col:last-child .footer-socials{gap:8px;}
+  .footer-inner > .footer-col:last-child .footer-socials .social-icon{
+    width:33px;height:33px;
+  }
+  .footer-inner > .footer-col:last-child .footer-contact li:last-child{
+    padding-right:118px;
+  }
+}
+
+/* Social icons were sitting flush against the footer's right edge —
+   pulled in a little so they don't touch the border. Mobile only. */
+@media (max-width:760px){
+  .footer-inner > .footer-col:last-child .footer-socials{right:14px;}
+  .footer-inner > .footer-col:last-child .footer-contact li:last-child{
+    padding-right:150px;
+  }
+}
+
+@media (max-width:400px){
+  .footer-inner > .footer-col:last-child .footer-socials{right:10px;}
+  .footer-inner > .footer-col:last-child .footer-contact li:last-child{
+    padding-right:128px;
+  }
+}
+
+/* ===== Footer: centre the CTA button and the "Get In Touch" heading ===== */
+@media (max-width:760px){
+  /* inline-flex + auto margins needs a flex/block context, so make it a
+     block-level flex box that only takes the width of its label. */
+  .footer-cta-btn{
+    display:flex;
+    width:fit-content;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .footer-heading{text-align:center;}
+  /* the gradient underline is absolutely positioned at left:0, so it has
+     to be re-centred too. */
+  .footer-heading::after{left:50%;transform:translateX(-50%);}
+}
+
+/* Less dead space under the back-to-top button on mobile: the footer's
+   own bottom padding and the footer-bottom row's padding were stacking. */
+@media (max-width:760px){
+  .footer{padding-bottom:calc(12px + env(safe-area-inset-bottom));}
+  .footer-bottom{padding-bottom:10px;}
+  .footer-bottom .back-to-top{margin-top:2px;}
+}
+
+/* ===== Hero illustration: true edge-to-edge on mobile =====
+   The image was already sized at 100%, but "100%" meant the hero's
+   content box — which is inset by the hero's 20px side padding, so it
+   always stopped short of both edges. Negative side margins stretch
+   .hero-inner out to the screen edges and the same value is added back
+   as padding, so the background fills the full width while the hero
+   text keeps its original inset. */
+@media (max-width:760px){
+  .hero-inner{
+    margin-inline:-20px;
+    padding-inline:20px;
+    background-size:100% auto;
+    background-position:center bottom;
+  }
+}
+
+@media (max-width:400px){
+  .hero-inner{
+    margin-inline:-20px;
+    padding-inline:16px;
+    background-size:100% auto;
+  }
+}
+
+/* ===== Desktop hero illustration: bigger, reaches the right edge =====
+   Scoped to min-width:901px so none of the mobile rules above are
+   touched. The old fixed 900px left the image short of the hero's right
+   edge on wide screens; a percentage keeps it proportional instead. */
+@media (min-width:901px){
+  .hero-inner{
+    background-size:min(1120px, 72%) auto;
+    background-position:right bottom;
+    /* a taller image needs a taller row, otherwise the top gets cropped */
+    min-height:560px;
+  }
+}
+
+/* Fix for the previous desktop tweak: sizing by WIDTH (72%) made the
+   image taller than the row, so its top was cropped, and any leftover
+   row height showed as empty space beside it. Sizing by HEIGHT instead
+   means the illustration always fits the row exactly — nothing cut off
+   at the top — while staying anchored to the right edge. Desktop only. */
+@media (min-width:901px){
+  .hero-inner{
+    background-size:auto 100%;
+    background-position:right bottom;
+    min-height:580px;
+  }
+}
+
+/* Short greeting on phones: "Hello, I'm Dhananjay". The full name still
+   shows on desktop (the swap classes are already in the markup). */
+@media (max-width:760px){
+  .hero-greet-name-full{display:none;}
+  .hero-greet-name-short{display:inline;}
+}
+/* =========================================================================
+   Additions from the accessibility / correctness pass
+   ========================================================================= */
+
+/* Keyboard users can jump straight past the nav. Visible only on focus. */
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  padding:10px 16px;border-radius:0 0 10px 0;
+  background:var(--accent,#4C7CF3);color:#fff;font-weight:600;text-decoration:none;
+}
+.skip-link:focus{left:0;}
+
+/* Consistent, visible focus ring - the default was invisible on dark. */
+a:focus-visible,button:focus-visible,input:focus-visible,
+textarea:focus-visible,select:focus-visible{
+  outline:2px solid var(--accent,#4C7CF3);
+  outline-offset:2px;
+  border-radius:6px;
+}
+
+/* Honeypot: off-screen rather than display:none, because some bots skip
+   hidden fields but not positioned ones. */
+.hp-field{
+  position:absolute!important;left:-9999px!important;
+  width:1px;height:1px;overflow:hidden;
+}
+
+/* Form status now has real states instead of inline styles set from JS. */
+.form-status{font-size:.88rem;min-height:1.2em;color:var(--muted);}
+.form-status--ok{color:#12B886;}
+.form-status--error{color:#e03131;}
+.form-status a{color:inherit;text-decoration:underline;}
+
+.field-hint{font-weight:400;opacity:.7;}
+
+/* Manage rows now carry edit + delete. */
+.manage-row-actions{display:flex;gap:6px;align-items:center;}
+.manage-edit-btn,.manage-delete-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:8px;cursor:pointer;
+  background:transparent;border:1px solid var(--border,#2a2f3a);color:var(--muted);
+  transition:color .15s ease,border-color .15s ease,background .15s ease;
+}
+.manage-edit-btn:hover{color:var(--accent,#4C7CF3);border-color:currentColor;}
+.manage-delete-btn:hover{color:#e03131;border-color:currentColor;}
+.manage-edit-btn[disabled],.manage-delete-btn[disabled]{opacity:.5;cursor:not-allowed;}
+.manage-empty{font-size:.85rem;color:var(--muted);}
+
+/* Stop background scroll while a modal or the mobile menu is open. */
+body.modal-open,body.nav-open{overflow:hidden;}
+
+/* Reserve image space so cards don't jump as thumbnails load. */
+.work-thumb{aspect-ratio:16/9;}
+.cert-thumb{aspect-ratio:4/3;}
+.work-thumb img,.cert-thumb img{max-width:100%;height:100%;}
+
+.contact-grid--single{grid-template-columns:minmax(0,560px);}
+
+.admin-signout{
+  font-size:.8rem;color:var(--muted);text-decoration:underline;
+  display:inline-block;margin-bottom:8px;
+}
+
+/* Disabled submit buttons should look disabled. */
+button[disabled]{opacity:.6;cursor:progress;}
+
+/* Honour the OS motion preference globally for anything added later. */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+}

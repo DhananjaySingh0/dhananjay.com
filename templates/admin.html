@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Admin | {{ site.name }}{% endblock %}
+{% block description %}Owner sign-in.{% endblock %}
+{% block head_extra %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+  <div class="contact-page-head">
+    <span class="eyebrow"><span class="dot"></span> ADMIN</span>
+    <h1>Sign in</h1>
+    {% if disabled %}
+      <p>Admin is disabled. Set both <code>ADMIN_TOKEN</code> and <code>SECRET_KEY</code> in your environment to enable it.</p>
+    {% else %}
+      <p>Sign in once to add, edit, reorder and delete projects and certifications without retyping your token.</p>
+    {% endif %}
+  </div>
+
+  {% if not disabled %}
+  <div class="contact-grid contact-grid--single">
+    <form class="contact-form" method="post" action="{{ url_for('admin') }}">
+      <div class="field">
+        <label for="admin-token">Admin token</label>
+        <input id="admin-token" type="password" name="admin_token" autocomplete="current-password" required autofocus>
+      </div>
+      {% if error %}<p class="form-status form-status--error" role="alert">{{ error }}</p>{% endif %}
+      <button type="submit" class="btn btn-primary">Sign in <span class="arrow">→</span></button>
+      <p class="form-note">The token is the value of <code>ADMIN_TOKEN</code> in your environment. It is never stored in the page.</p>
+    </form>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
