@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "96420694",
+    "title": "AI Video Watermark Remover",
+    "description": "AI-powered web application for removing watermarks from videos using four techniques: Smart Fill (OpenCV TELEA inpainting), Blur, Pixelate, and Black Box. Features automatic watermark detection, interactive region selection, FFmpeg-based audio-preserving video export, secure file validation, rate limiting, and a bounded processing queue for efficient video processing.",
+    "tags": [
+      "Python",
+      "Flask",
+      "OpenCV",
+      "FFmpeg",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Computer Vision"
+    ],
+    "code_url": "https://github.com/DhananjaySingh0/WATERMARK-REMOVER",
+    "demo_url": "https://watermark-remover-sgvt.onrender.com",
+    "demo_text": "Live demo",
+    "image": "uploads/2b430aa0fd51445198913887d7ccdec3.png",
+    "initials": "AV",
+    "order": 0
+  }
+]
