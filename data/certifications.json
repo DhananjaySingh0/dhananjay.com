@@ -25,5 +25,14 @@
     "image": "uploads/4a643a8eacda402b8b1510728f0fae70.jpeg",
     "link": "",
     "order": 2
+  },
+  {
+    "id": "7b35623c",
+    "title": "AWS Academy Graduate – Cloud Foundations",
+    "issuer": "AWS Academy",
+    "meta": "20 Course Hours • Issued Jul 2025",
+    "image": "uploads/0cb418d0d129497cb829a2308d5bd413.jpeg",
+    "link": "",
+    "order": 3
   }
 ]
