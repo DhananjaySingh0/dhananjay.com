@@ -19,5 +19,29 @@
     "image": "uploads/2b430aa0fd51445198913887d7ccdec3.png",
     "initials": "AV",
     "order": 0
+  },
+  {
+    "id": "ad5d17b4",
+    "title": "20M Dash Speed Analysis",
+    "description": "AI-powered sprint analysis tool that processes a 20-metre dash video using YOLOv8 and ByteTrack to track the runner and calculate speed, sprint duration, peak speed, average speed, and form metrics. Generates an annotated playback video with live overlays along with HTML and JSON performance reports. Features asynchronous background processing, real-time progress updates via Server-Sent Events (SSE), and browser-compatible H.264 video export.",
+    "tags": [
+      "Python",
+      "Flask",
+      "YOLOv8",
+      "ByteTrack",
+      "OpenCV",
+      "PyTorch",
+      "FFmpeg",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "SSE"
+    ],
+    "code_url": "https://two0m-dash-speed.onrender.com",
+    "demo_url": "https://github.com/DhananjaySingh0/20M_DASH_SPEED",
+    "demo_text": "Live demo",
+    "image": "uploads/e3d13c8fd54542e2951c863adf8e34a6.png",
+    "initials": "2D",
+    "order": 1
   }
 ]
