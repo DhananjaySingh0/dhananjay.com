@@ -867,6 +867,16 @@
 
   contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Belt-and-suspenders: don't let a submit through until name, phone,
+    // email and message are actually filled. reportValidity() re-checks the
+    // required/type constraints on the fields and, if anything's missing,
+    // shows the browser's native prompt pointing at the first empty one
+    // instead of sending the request.
+    if (!contactForm.reportValidity()) {
+      return;
+    }
+
     const payload = Object.fromEntries(new FormData(contactForm).entries());
     const submitBtn = $('button[type="submit"]', contactForm);
 
