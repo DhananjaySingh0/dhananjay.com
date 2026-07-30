@@ -76,7 +76,7 @@ def test_missing_resume_is_404_not_500(client):
 # --------------------------------------------------------------------------
 
 def post_contact(client, **fields):
-    payload = {"name": "Ada", "email": "ada@example.com", "message": "Hello there"}
+    payload = {"name": "Ada", "email": "ada@example.com", "phone": "+91 98765 43210", "message": "Hello there"}
     payload.update(fields)
     return client.post("/api/contact", json=payload)
 
@@ -90,6 +90,7 @@ def test_contact_happy_path(client):
 def test_contact_requires_fields(client):
     assert post_contact(client, name="").status_code == 400
     assert post_contact(client, message="  ").status_code == 400
+    assert post_contact(client, phone="").status_code == 400
 
 
 def test_contact_rejects_bad_email(client):
