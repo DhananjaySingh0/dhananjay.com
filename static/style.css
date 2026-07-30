@@ -782,6 +782,7 @@ html[data-theme="light"] .hero-img-light{display:block;}
 .contact-form{max-width:none;padding:0;display:flex;flex-direction:column;gap:16px;border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--bg);}
 .contact-form .field{display:flex;flex-direction:column;gap:6px;}
 .contact-form .field label{font-size:.78rem;font-weight:600;color:var(--muted);}
+.required-mark{color:var(--purple);}
 .form-note{color:var(--muted);font-size:.78rem;}
 .form-row{display:flex;gap:16px;}
 .contact-form input,.contact-form textarea{border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:.95rem;width:100%;background:var(--bg);color:var(--ink);}
