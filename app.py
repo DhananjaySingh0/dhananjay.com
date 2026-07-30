@@ -497,8 +497,8 @@ def contact():
     subject = security.clean_text(data.get("subject"), config.MAX_SUBJECT_LEN)
     message = security.clean_text(data.get("message"), config.MAX_MESSAGE_LEN)
 
-    if not name or not email or not message:
-        return jsonify({"error": "Name, email and message are required."}), 400
+    if not name or not email or not phone or not message:
+        return jsonify({"error": "Name, phone, email and message are required."}), 400
     if not security.is_valid_email(email):
         return jsonify({"error": "That email address doesn't look right."}), 400
 
