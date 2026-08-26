@@ -47,10 +47,11 @@
   {
     "id": "c8b2d97d",
     "title": "Overlay Studio",
-    "description": "A full-stack video watermarking tool with an interactive drag/resize/rotate logo editor, live timeline control, entrance animations, and quality/codec output options. Built with Flask and MoviePy, featuring server-rendered previews, background rendering with live progress polling, and a standalone video trimmer.",
+    "description": "AI-powered Background Remover and Video Overlay & Cut Studio built with Flask. Supports transparent image cutouts, custom backgrounds, logo overlays, video trimming, animations, previews, and high-quality exports.",
     "tags": [
       "Python",
       "Flask",
+      "rembg",
       "MoviePy",
       "FFmpeg",
       "Pillow",
@@ -59,9 +60,9 @@
       "Gunicorn"
     ],
     "code_url": "https://github.com/DhananjaySingh0/Overlay_Studio",
-    "demo_url": "https://overlay-studio.onrender.com/",
+    "demo_url": "https://overlay-studio.onrender.com",
     "demo_text": "Live demo",
-    "image": "uploads/bc5f6ad5971047a2bac72f455806572e.png",
+    "image": "uploads/740b4322999e41e3b7719ada68969fe0.png",
     "initials": "OS",
     "order": 2
   }
