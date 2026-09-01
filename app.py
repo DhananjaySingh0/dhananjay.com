@@ -15,6 +15,7 @@ from flask import (
     Flask, abort, jsonify, make_response, redirect, render_template, request,
     send_from_directory, session, url_for,
 )
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 import config
 import github_sync
@@ -25,6 +26,13 @@ import storage
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
+
+# Render (and most hosts) terminate HTTPS at a reverse proxy and forward to
+# the app over plain HTTP, setting X-Forwarded-Proto/Host instead. Without
+# this, request.url_root / url_for(..., _external=True) generate http://
+# URLs even though the site is served over https:// - breaking canonical
+# links, og:url, and sitemap.xml entries used for SEO and social sharing.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 app.config["MAX_CONTENT_LENGTH"] = config.MAX_CONTENT_LENGTH
 app.config["JSON_SORT_KEYS"] = False
 
