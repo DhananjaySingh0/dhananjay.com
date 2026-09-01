@@ -445,6 +445,15 @@ def media(filename):
     return send_from_directory(config.UPLOAD_FOLDER, filename, max_age=86400)
 
 
+@app.route("/google7f651488916b5738.html")
+def google_site_verification():
+    # Google Search Console ownership verification.
+    # Do not remove - Search Console re-checks this file periodically.
+    response = make_response("google-site-verification: google7f651488916b5738.html")
+    response.headers["Content-Type"] = "text/html; charset=utf-8"
+    return response
+
+
 @app.route("/robots.txt")
 def robots():
     body = (
